@@ -5,11 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>السر الإلهي - بنت الإمام الحسين عليه السلام رقيّه</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<link rel="manifest" href="manifest.json">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:'Arial', sans-serif; direction:rtl; background:#f9f9f9; color:#333; padding-bottom:60px; }
-h1 { text-align:center; margin:20px 0; font-size:24px; }
+
+.page { display: none; padding-bottom:70px; } /* كل قسم مخفي بشكل افتراضي */
+.page.active { display: block; }
+
 /* مشغل الفيديو */
 .media-player { position:relative; width:90%; max-width:720px; margin:20px auto; background:#000; border-radius:10px; overflow:hidden; }
 video { width:100%; display:block; border-radius:10px; }
@@ -19,8 +21,10 @@ video { width:100%; display:block; border-radius:10px; }
 .controls-buttons { display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; }
 .controls-buttons button { background:none; border:none; color:#fff; font-size:20px; cursor:pointer; display:flex; align-items:center; gap:5px; }
 .controls-buttons button:hover { color:#00bcd4; }
+
 /* النبذة التعريفية */
 .about-section { background:#fff; padding:15px; margin:20px auto; border-radius:8px; width:90%; box-shadow:0 2px 5px rgba(0,0,0,0.2); text-align:justify; }
+
 /* زر التفاصيل والقائمة الثانوية */
 .details-button { display:block; width:90%; margin:10px auto; text-align:center; }
 .details-button button { background:#00bcd4; color:white; border:none; padding:10px; border-radius:5px; cursor:pointer; width:100%; font-size:16px; }
@@ -28,18 +32,34 @@ video { width:100%; display:block; border-radius:10px; }
 .secondary-buttons { display:none; flex-direction:column; margin-top:10px; }
 .secondary-buttons a { display:block; padding:8px; margin:5px 0; background:#f0f0f0; border-radius:5px; text-decoration:none; color:#333; text-align:center; }
 .secondary-buttons a:hover { background:#e0e0e0; }
+
 /* شريط الأزرار السفلي */
 .bottom-bar { position:fixed; bottom:0; width:100%; background:#333; display:flex; justify-content:space-around; padding:10px 0; box-shadow:0 -2px 5px rgba(0,0,0,0.2); }
 .bottom-bar a { color:white; text-decoration:none; font-size:14px; display:flex; flex-direction:column; align-items:center; }
 .bottom-bar a i { font-size:20px; margin-bottom:5px; }
 .bottom-bar a:hover { color:#00bcd4; }
+
 /* زر تثبيت PWA */
 #installApp { display:flex; justify-content:center; margin-top:20px; }
 #installApp button { background:#00bcd4; color:white; padding:10px 20px; border-radius:5px; cursor:pointer; font-size:16px; }
 #installApp button:hover { background:#0097a7; }
+
+/* قسم المنشورات */
+.posts-container { display:flex; gap:20px; flex-wrap:wrap; }
+.create-post, .my-posts, .visitor-posts { flex:1; background:#fff; padding:15px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.2); }
+textarea { width:100%; height:80px; margin-bottom:10px; padding:8px; }
+button { padding:8px 12px; background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer; }
+button:hover { background:#0056b3; }
+.post { margin-bottom:10px; padding:8px; border-bottom:1px solid #ccc; }
+.post .interactions { margin-top:5px; display:flex; gap:5px; }
 </style>
 </head>
 <body>
+
+<!-- ================= الأقسام ================= -->
+
+<!-- الصفحة الرئيسية -->
+<div id="home" class="page active">
 
 <h1>السر الإلهي - بنت الإمام الحسين عليه السلام رقيّه</h1>
 
@@ -87,24 +107,49 @@ video { width:100%; display:block; border-radius:10px; }
     </div>
 </div>
 
-<!-- شريط الأزرار السفلي -->
+</div> <!-- نهاية home -->
+
+<!-- ================= قسم المنشورات ================= -->
+<div id="posts" class="page">
+
+<h1>قسم المنشورات</h1>
+<div class="posts-container">
+  <div class="create-post">
+    <h2>إنشاء منشور جديد</h2>
+    <textarea placeholder="اكتب منشورك هنا..."></textarea>
+    <button onclick="addPost()">نشر</button>
+  </div>
+
+  <div class="my-posts">
+    <h2>منشوراتي</h2>
+    <div id="myPostsList"></div>
+  </div>
+
+  <div class="visitor-posts">
+    <h2>منشورات الزوار</h2>
+    <div id="visitorPostsList"></div>
+  </div>
+</div>
+
+</div> <!-- نهاية posts -->
+
+<!-- ================= شريط الأزرار السفلي ================= -->
 <div class="bottom-bar">
-    <a href="#"><i class="fas fa-home"></i>الرئيسية</a>
+    <a href="#" onclick="showPage('home')"><i class="fas fa-home"></i>الرئيسية</a>
     <a href="#"><i class="fas fa-list"></i>المواضيع</a>
-    <a href="posts.html"><i class="fas fa-newspaper"></i>المنشورات</a>
+    <a href="#" onclick="showPage('posts')"><i class="fas fa-newspaper"></i>المنشورات</a>
     <a href="#"><i class="fas fa-comments"></i>التواصل</a>
 </div>
 
-<!-- زر تثبيت تطبيق ويب -->
 <div id="installApp"></div>
 
+<!-- ================= السكربت ================= -->
 <script>
-// قائمة الفيديوهات
+// ===== صفحة الفيديو =====
 const videoList = ["video.mp4","video2.mp4","video3.mp4"];
 let currentIndex = 0;
 let repeatActive = false;
 
-// عناصر التحكم
 const videoPlayer = document.getElementById('videoPlayer');
 const playPauseBtn = document.getElementById('playPauseBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -114,17 +159,12 @@ const downloadBtn = document.getElementById('downloadBtn');
 const fullscreenBtn = document.getElementById('fullscreenBtn');
 const progressBar = document.getElementById('progressBar');
 const progressFilled = document.getElementById('progressFilled');
-const toggleButton = document.getElementById('toggleButton');
-const secondaryButtons = document.getElementById('secondaryButtons');
 
-// تحميل الفيديو الحالي
 function loadVideo(index){
     videoPlayer.src = videoList[index];
     videoPlayer.load();
     updatePlayPauseIcon();
 }
-
-// تشغيل/إيقاف
 playPauseBtn.addEventListener('click', ()=>{
     if(videoPlayer.paused) videoPlayer.play();
     else videoPlayer.pause();
@@ -133,28 +173,20 @@ playPauseBtn.addEventListener('click', ()=>{
 function updatePlayPauseIcon(){
     playPauseBtn.innerHTML = videoPlayer.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
 }
-
-// التالي
 nextBtn.addEventListener('click', ()=>{
     currentIndex = (currentIndex + 1) % videoList.length;
     loadVideo(currentIndex);
     videoPlayer.play();
 });
-
-// السابق
 prevBtn.addEventListener('click', ()=>{
     currentIndex = (currentIndex - 1 + videoList.length) % videoList.length;
     loadVideo(currentIndex);
     videoPlayer.play();
 });
-
-// تفعيل/إيقاف التكرار
 repeatBtn.addEventListener('click', ()=>{
     repeatActive = !repeatActive;
     repeatBtn.style.color = repeatActive ? '#00bcd4' : '#fff';
 });
-
-// تكرار الفيديو عند الضغط على زر التكرار أو انتهاء الفيديو
 videoPlayer.addEventListener('ended', ()=>{
     if(repeatActive){
         videoPlayer.currentTime = 0;
@@ -164,16 +196,12 @@ videoPlayer.addEventListener('ended', ()=>{
         updatePlayPauseIcon();
     }
 });
-
-// تحميل الفيديو
 downloadBtn.addEventListener('click', ()=>{
     const link = document.createElement('a');
     link.href = videoList[currentIndex];
     link.download = videoList[currentIndex];
     link.click();
 });
-
-// شريط التقدم
 videoPlayer.addEventListener('timeupdate', ()=>{
     const percent = (videoPlayer.currentTime / videoPlayer.duration) * 100;
     progressFilled.style.width = percent + '%';
@@ -185,8 +213,6 @@ progressBar.addEventListener('click', (e)=>{
     const newTime = (clickX / width) * videoPlayer.duration;
     videoPlayer.currentTime = newTime;
 });
-
-// زر Fullscreen
 fullscreenBtn.addEventListener('click', ()=>{
     if (!document.fullscreenElement){
         videoPlayer.requestFullscreen();
@@ -196,6 +222,8 @@ fullscreenBtn.addEventListener('click', ()=>{
 });
 
 // زر التفاصيل
+const toggleButton = document.getElementById('toggleButton');
+const secondaryButtons = document.getElementById('secondaryButtons');
 toggleButton.addEventListener('click', ()=>{
     if(secondaryButtons.style.display === "none" || secondaryButtons.style.display === ""){
         secondaryButtons.style.display = "flex";
@@ -221,11 +249,43 @@ function installApp(){
     }
 }
 
-// تحميل أول فيديو عند بدء الصفحة
+// تحميل أول فيديو
 window.addEventListener('load', ()=>{
     loadVideo(currentIndex);
 });
-</script>
 
+// ===== قسم المنشورات =====
+function showPage(pageId){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+}
+function addPost(){
+    const textarea = document.querySelector('#posts textarea');
+    const text = textarea.value.trim();
+    if(text === "") return;
+
+    const postDiv = document.createElement('div');
+    postDiv.className = "post";
+    postDiv.innerHTML = `<p>${text}</p>
+        <div class="interactions">
+            <button onclick="likePost(this)">👍 إعجاب</button>
+            <button onclick="commentPost(this)">💬 تعليق</button>
+        </div>`;
+
+    document.getElementById('myPostsList').prepend(postDiv);
+    textarea.value = "";
+}
+function likePost(btn){
+    btn.innerText = btn.innerText.includes("✔️") ? "👍 إعجاب" : "✔️ تم الإعجاب";
+}
+function commentPost(btn){
+    const comment = prompt("أدخل تعليقك:");
+    if(!comment) return;
+    const commentEl = document.createElement("p");
+    commentEl.style.marginRight = "15px";
+    commentEl.innerText = "💬 " + comment;
+    btn.parentElement.appendChild(commentEl);
+}
+</script>
 </body>
 </html>
