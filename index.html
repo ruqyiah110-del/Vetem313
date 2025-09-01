@@ -13,9 +13,12 @@ video { width:100%; display:block; border-radius:10px; }
 .controls-overlay { position:absolute; bottom:0; left:0; width:100%; background:rgba(0,0,0,0.5); display:flex; flex-direction:column; padding:5px; box-sizing:border-box; }
 .progress-bar { width:100%; height:5px; background:#555; cursor:pointer; margin-bottom:5px; border-radius:3px; position:relative; }
 .progress-filled { height:100%; background:#00bcd4; width:0%; border-radius:3px; }
-.controls-buttons { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
-.controls-buttons button { background:none; border:none; color:#fff; font-size:18px; cursor:pointer; margin:2px; display:flex; align-items:center; gap:5px; }
+.controls-buttons { display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; }
+.controls-buttons button { background:none; border:none; color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; gap:5px; }
 .controls-buttons button:hover { color:#00bcd4; }
+/* تعديل أزرار التنقل لتكون < و > */
+#prevBtn::before { content:'<'; font-size:20px; margin-right:5px; }
+#nextBtn::after { content:'>'; font-size:20px; margin-left:5px; }
 </style>
 </head>
 <body>
@@ -30,9 +33,9 @@ video { width:100%; display:block; border-radius:10px; }
             <div class="progress-filled" id="progressFilled"></div>
         </div>
         <div class="controls-buttons">
-            <button id="prevBtn"><i class="fas fa-backward"></i></button>
+            <button id="prevBtn"></button>
             <button id="playPauseBtn"><i class="fas fa-play"></i></button>
-            <button id="nextBtn"><i class="fas fa-forward"></i></button>
+            <button id="nextBtn"></button>
             <button id="repeatBtn"><i class="fas fa-retweet"></i></button>
             <button id="downloadBtn"><i class="fas fa-download"></i></button>
         </div>
@@ -54,11 +57,11 @@ const downloadBtn = document.getElementById('downloadBtn');
 const progressBar = document.getElementById('progressBar');
 const progressFilled = document.getElementById('progressFilled');
 
-// تحديث الفيديو الحالي
+// تحميل الفيديو الحالي
 function loadVideo(index){
     videoPlayer.src = videoList[index];
     videoPlayer.load();
-    updateButtons();
+    updatePlayPauseIcon();
 }
 
 // تشغيل/إيقاف
@@ -76,20 +79,22 @@ function updatePlayPauseIcon(){
 nextBtn.addEventListener('click', ()=>{
     if(currentIndex < videoList.length - 1){
         currentIndex++;
-        loadVideo(currentIndex);
-        videoPlayer.play();
-        updatePlayPauseIcon();
+    } else {
+        currentIndex = 0; // إذا تريد يعود أول فيديو عند نهاية القائمة
     }
+    loadVideo(currentIndex);
+    videoPlayer.play();
 });
 
 // السابق
 prevBtn.addEventListener('click', ()=>{
     if(currentIndex > 0){
         currentIndex--;
-        loadVideo(currentIndex);
-        videoPlayer.play();
-        updatePlayPauseIcon();
+    } else {
+        currentIndex = videoList.length - 1; // إذا تريد يذهب لآخر فيديو عند الضغط على السابق من البداية
     }
+    loadVideo(currentIndex);
+    videoPlayer.play();
 });
 
 // تكرار الفيديو
@@ -107,12 +112,6 @@ downloadBtn.addEventListener('click', ()=>{
     link.click();
 });
 
-// تحديث الأزرار (إخفاء التالي/السابق عند الحد)
-function updateButtons(){
-    nextBtn.style.display = currentIndex >= videoList.length-1 ? 'none' : 'inline-flex';
-    prevBtn.style.display = currentIndex <= 0 ? 'none' : 'inline-flex';
-}
-
 // شريط التقدم
 videoPlayer.addEventListener('timeupdate', ()=>{
     const percent = (videoPlayer.currentTime / videoPlayer.duration) * 100;
@@ -128,22 +127,20 @@ progressBar.addEventListener('click', (e)=>{
     videoPlayer.currentTime = newTime;
 });
 
-// عند انتهاء الفيديو، شغّل التالي تلقائي إذا موجود
+// عند انتهاء الفيديو، شغّل التالي تلقائي
 videoPlayer.addEventListener('ended', ()=>{
     if(currentIndex < videoList.length - 1){
         currentIndex++;
-        loadVideo(currentIndex);
-        videoPlayer.play();
-        updatePlayPauseIcon();
     } else {
-        updatePlayPauseIcon();
+        currentIndex = 0; // إعادة تشغيل القائمة من البداية
     }
+    loadVideo(currentIndex);
+    videoPlayer.play();
 });
 
 // التحميل عند بدء الصفحة
 window.addEventListener('load', ()=>{
     loadVideo(currentIndex);
-    updatePlayPauseIcon();
 });
 </script>
 
