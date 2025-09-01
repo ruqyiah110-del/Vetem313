@@ -5,12 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>السر الإلهي - بنت الإمام الحسين عليه السلام رقيّه</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="manifest" href="manifest.json">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:'Arial', sans-serif; direction:rtl; background:#f9f9f9; color:#333; padding-bottom:60px; }
-
-.page { display: none; padding-bottom:70px; } /* كل قسم مخفي بشكل افتراضي */
-.page.active { display: block; }
+h1 { text-align:center; margin:20px 0; font-size:24px; }
 
 /* مشغل الفيديو */
 .media-player { position:relative; width:90%; max-width:720px; margin:20px auto; background:#000; border-radius:10px; overflow:hidden; }
@@ -33,6 +32,17 @@ video { width:100%; display:block; border-radius:10px; }
 .secondary-buttons a { display:block; padding:8px; margin:5px 0; background:#f0f0f0; border-radius:5px; text-decoration:none; color:#333; text-align:center; }
 .secondary-buttons a:hover { background:#e0e0e0; }
 
+/* قسم المنشورات */
+#posts { display:none; width:90%; max-width:900px; margin:20px auto; }
+#posts textarea { width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px; resize:none; }
+#posts button { background:#00bcd4; color:#fff; border:none; padding:10px; border-radius:5px; cursor:pointer; width:100%; margin-bottom:10px; font-size:16px; }
+#posts button:hover { background:#0097a7; }
+.posts-container { display:flex; gap:10px; flex-wrap:wrap; }
+.posts-section { flex:1; background:#fff; padding:10px; border-radius:5px; box-shadow:0 1px 3px rgba(0,0,0,0.2); }
+.posts-section h3 { margin-bottom:10px; }
+.post { background:#f0f0f0; padding:8px; border-radius:5px; margin-bottom:8px; }
+.interactions button { margin-right:5px; cursor:pointer; }
+
 /* شريط الأزرار السفلي */
 .bottom-bar { position:fixed; bottom:0; width:100%; background:#333; display:flex; justify-content:space-around; padding:10px 0; box-shadow:0 -2px 5px rgba(0,0,0,0.2); }
 .bottom-bar a { color:white; text-decoration:none; font-size:14px; display:flex; flex-direction:column; align-items:center; }
@@ -44,27 +54,17 @@ video { width:100%; display:block; border-radius:10px; }
 #installApp button { background:#00bcd4; color:white; padding:10px 20px; border-radius:5px; cursor:pointer; font-size:16px; }
 #installApp button:hover { background:#0097a7; }
 
-/* قسم المنشورات */
-.posts-container { display:flex; gap:20px; flex-wrap:wrap; }
-.create-post, .my-posts, .visitor-posts { flex:1; background:#fff; padding:15px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.2); }
-textarea { width:100%; height:80px; margin-bottom:10px; padding:8px; }
-button { padding:8px 12px; background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer; }
-button:hover { background:#0056b3; }
-.post { margin-bottom:10px; padding:8px; border-bottom:1px solid #ccc; }
-.post .interactions { margin-top:5px; display:flex; gap:5px; }
+/* إظهار صفحة المنشورات */
+.page { display:none; }
+.page.active { display:block; }
 </style>
 </head>
 <body>
 
-<!-- ================= الأقسام ================= -->
-
-<!-- الصفحة الرئيسية -->
-<div id="home" class="page active">
-
 <h1>السر الإلهي - بنت الإمام الحسين عليه السلام رقيّه</h1>
 
 <!-- مشغل الفيديو -->
-<div class="media-player">
+<div class="media-player page active" id="home">
     <video id="videoPlayer" playsinline></video>
     <div class="controls-overlay">
         <div class="progress-bar" id="progressBar">
@@ -82,14 +82,14 @@ button:hover { background:#0056b3; }
 </div>
 
 <!-- النبذة التعريفية -->
-<div class="about-section">
+<div class="about-section page active">
     <p>
         هذا التطبيق يقدم نبذة حول معجزة الرجعة وأحداثها في عالم الملكوت وعالم الدنيا، بالإضافة إلى مناقشة مواضيع النسخ والتقمص وأسباب المعجزة.
     </p>
 </div>
 
 <!-- زر تفاصيل معجزة الرجعة -->
-<div class="details-button">
+<div class="details-button page active">
     <button id="toggleButton">تفاصيل معجزة الرجعة</button>
     <div id="secondaryButtons" class="secondary-buttons">
         <a href="#">المقدمة</a>
@@ -107,45 +107,35 @@ button:hover { background:#0056b3; }
     </div>
 </div>
 
-</div> <!-- نهاية home -->
-
-<!-- ================= قسم المنشورات ================= -->
+<!-- قسم المنشورات -->
 <div id="posts" class="page">
-
-<h1>قسم المنشورات</h1>
-<div class="posts-container">
-  <div class="create-post">
-    <h2>إنشاء منشور جديد</h2>
-    <textarea placeholder="اكتب منشورك هنا..."></textarea>
-    <button onclick="addPost()">نشر</button>
-  </div>
-
-  <div class="my-posts">
-    <h2>منشوراتي</h2>
-    <div id="myPostsList"></div>
-  </div>
-
-  <div class="visitor-posts">
-    <h2>منشورات الزوار</h2>
-    <div id="visitorPostsList"></div>
-  </div>
+    <textarea rows="3" placeholder="اكتب منشورك هنا..."></textarea>
+    <button onclick="addPost()">نشر المنشور</button>
+    <div class="posts-container">
+        <div class="posts-section">
+            <h3>منشوراتي</h3>
+            <div id="myPostsList"></div>
+        </div>
+        <div class="posts-section">
+            <h3>منشورات الزوار</h3>
+            <div id="visitorPostsList"></div>
+        </div>
+    </div>
 </div>
 
-</div> <!-- نهاية posts -->
-
-<!-- ================= شريط الأزرار السفلي ================= -->
+<!-- شريط الأزرار السفلي -->
 <div class="bottom-bar">
     <a href="#" onclick="showPage('home')"><i class="fas fa-home"></i>الرئيسية</a>
-    <a href="#"><i class="fas fa-list"></i>المواضيع</a>
+    <a href="#" onclick="showPage('home')"><i class="fas fa-list"></i>المواضيع</a>
     <a href="#" onclick="showPage('posts')"><i class="fas fa-newspaper"></i>المنشورات</a>
-    <a href="#"><i class="fas fa-comments"></i>التواصل</a>
+    <a href="#" onclick="showPage('home')"><i class="fas fa-comments"></i>التواصل</a>
 </div>
 
+<!-- زر تثبيت تطبيق ويب -->
 <div id="installApp"></div>
 
-<!-- ================= السكربت ================= -->
 <script>
-// ===== صفحة الفيديو =====
+// ===== مشغل الفيديو =====
 const videoList = ["video.mp4","video2.mp4","video3.mp4"];
 let currentIndex = 0;
 let repeatActive = false;
@@ -165,6 +155,7 @@ function loadVideo(index){
     videoPlayer.load();
     updatePlayPauseIcon();
 }
+
 playPauseBtn.addEventListener('click', ()=>{
     if(videoPlayer.paused) videoPlayer.play();
     else videoPlayer.pause();
@@ -221,7 +212,7 @@ fullscreenBtn.addEventListener('click', ()=>{
     }
 });
 
-// زر التفاصيل
+// ===== زر التفاصيل =====
 const toggleButton = document.getElementById('toggleButton');
 const secondaryButtons = document.getElementById('secondaryButtons');
 toggleButton.addEventListener('click', ()=>{
@@ -232,7 +223,7 @@ toggleButton.addEventListener('click', ()=>{
     }
 });
 
-// تثبيت PWA
+// ===== تثبيت PWA =====
 let deferredPrompt;
 const installAppDiv = document.getElementById('installApp');
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -249,32 +240,48 @@ function installApp(){
     }
 }
 
-// تحميل أول فيديو
+// تحميل أول فيديو عند فتح الصفحة
 window.addEventListener('load', ()=>{
     loadVideo(currentIndex);
+    loadPosts();
 });
 
-// ===== قسم المنشورات =====
+// ===== إدارة الصفحات =====
 function showPage(pageId){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
 }
-function addPost(){
+
+// ===== قسم المنشورات مع LocalStorage =====
+function loadPosts() {
+    const savedPosts = JSON.parse(localStorage.getItem("myPosts")) || [];
+    const myPostsList = document.getElementById('myPostsList');
+    myPostsList.innerHTML = "";
+    savedPosts.forEach(text => {
+        const postDiv = document.createElement('div');
+        postDiv.className = "post";
+        postDiv.innerHTML = `<p>${text}</p>
+            <div class="interactions">
+                <button onclick="likePost(this)">👍 إعجاب</button>
+                <button onclick="commentPost(this)">💬 تعليق</button>
+            </div>`;
+        myPostsList.prepend(postDiv);
+    });
+}
+
+function addPost() {
     const textarea = document.querySelector('#posts textarea');
     const text = textarea.value.trim();
     if(text === "") return;
 
-    const postDiv = document.createElement('div');
-    postDiv.className = "post";
-    postDiv.innerHTML = `<p>${text}</p>
-        <div class="interactions">
-            <button onclick="likePost(this)">👍 إعجاب</button>
-            <button onclick="commentPost(this)">💬 تعليق</button>
-        </div>`;
+    let savedPosts = JSON.parse(localStorage.getItem("myPosts")) || [];
+    savedPosts.push(text);
+    localStorage.setItem("myPosts", JSON.stringify(savedPosts));
 
-    document.getElementById('myPostsList').prepend(postDiv);
     textarea.value = "";
+    loadPosts();
 }
+
 function likePost(btn){
     btn.innerText = btn.innerText.includes("✔️") ? "👍 إعجاب" : "✔️ تم الإعجاب";
 }
@@ -287,5 +294,6 @@ function commentPost(btn){
     btn.parentElement.appendChild(commentEl);
 }
 </script>
+
 </body>
 </html>
