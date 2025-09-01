@@ -11,6 +11,10 @@
 body { font-family:'Arial', sans-serif; direction:rtl; background:#f9f9f9; color:#333; padding-bottom:60px; }
 h1 { text-align:center; margin:20px 0; font-size:24px; }
 
+/* صفحات */
+.page { display:none; }
+.page.active { display:block; }
+
 /* مشغل الفيديو */
 .media-player { position:relative; width:90%; max-width:720px; margin:20px auto; background:#000; border-radius:10px; overflow:hidden; }
 video { width:100%; display:block; border-radius:10px; }
@@ -21,10 +25,10 @@ video { width:100%; display:block; border-radius:10px; }
 .controls-buttons button { background:none; border:none; color:#fff; font-size:20px; cursor:pointer; display:flex; align-items:center; gap:5px; }
 .controls-buttons button:hover { color:#00bcd4; }
 
-/* النبذة التعريفية */
+/* نبذة */
 .about-section { background:#fff; padding:15px; margin:20px auto; border-radius:8px; width:90%; box-shadow:0 2px 5px rgba(0,0,0,0.2); text-align:justify; }
 
-/* زر التفاصيل والقائمة الثانوية */
+/* التفاصيل */
 .details-button { display:block; width:90%; margin:10px auto; text-align:center; }
 .details-button button { background:#00bcd4; color:white; border:none; padding:10px; border-radius:5px; cursor:pointer; width:100%; font-size:16px; }
 .details-button button:hover { background:#0097a7; }
@@ -33,7 +37,6 @@ video { width:100%; display:block; border-radius:10px; }
 .secondary-buttons a:hover { background:#e0e0e0; }
 
 /* قسم المنشورات */
-#posts { display:none; width:90%; max-width:900px; margin:20px auto; }
 #posts input, #posts textarea { width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px; }
 #posts button { background:#00bcd4; color:#fff; border:none; padding:10px; border-radius:5px; cursor:pointer; width:100%; margin-bottom:10px; font-size:16px; }
 #posts button:hover { background:#0097a7; }
@@ -57,62 +60,56 @@ video { width:100%; display:block; border-radius:10px; }
 #installApp button { background:#00bcd4; color:white; padding:10px 20px; border-radius:5px; cursor:pointer; font-size:16px; }
 #installApp button:hover { background:#0097a7; }
 
-/* إظهار صفحة المنشورات */
-.page { display:none; }
-.page.active { display:block; }
-
 </style>
 </head>
 <body>
 
 <h1>السر الإلهي - بنت الإمام الحسين عليه السلام رقيّه</h1>
 
-<!-- مشغل الفيديو -->
-<div class="media-player page active" id="home">
-    <video id="videoPlayer" playsinline></video>
-    <div class="controls-overlay">
-        <div class="progress-bar" id="progressBar">
-            <div class="progress-filled" id="progressFilled"></div>
+<!-- الصفحة الرئيسية - الفيديو -->
+<div class="page active" id="home">
+    <div class="media-player">
+        <video id="videoPlayer" playsinline></video>
+        <div class="controls-overlay">
+            <div class="progress-bar" id="progressBar"><div class="progress-filled" id="progressFilled"></div></div>
+            <div class="controls-buttons">
+                <button id="prevBtn"><i class="fas fa-backward"></i></button>
+                <button id="playPauseBtn"><i class="fas fa-play"></i></button>
+                <button id="nextBtn"><i class="fas fa-forward"></i></button>
+                <button id="repeatBtn"><i class="fas fa-retweet"></i></button>
+                <button id="downloadBtn"><i class="fas fa-download"></i></button>
+                <button id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+            </div>
         </div>
-        <div class="controls-buttons">
-            <button id="prevBtn"><i class="fas fa-backward"></i></button>
-            <button id="playPauseBtn"><i class="fas fa-play"></i></button>
-            <button id="nextBtn"><i class="fas fa-forward"></i></button>
-            <button id="repeatBtn"><i class="fas fa-retweet"></i></button>
-            <button id="downloadBtn"><i class="fas fa-download"></i></button>
-            <button id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+    </div>
+
+    <div class="about-section">
+        <p>
+            هذا التطبيق يقدم نبذة حول معجزة الرجعة وأحداثها في عالم الملكوت وعالم الدنيا، بالإضافة إلى مناقشة مواضيع النسخ والتقمص وأسباب المعجزة.
+        </p>
+    </div>
+
+    <div class="details-button">
+        <button id="toggleButton">تفاصيل معجزة الرجعة</button>
+        <div id="secondaryButtons" class="secondary-buttons">
+            <a href="#">المقدمة</a>
+            <a href="#">أحداث الرجعة في عالم الملكوت</a>
+            <a href="#">أحداث الرجعة في عالم الدنيا</a>
+            <a href="#">ماهي المعجزة</a>
+            <a href="#">إشكاليات موضوع النسخ والتقمص</a>
+            <a href="#">أسباب المعجزة</a>
+            <a href="#">هل تتعارض مع القوانين التكوينية؟</a>
+            <a href="#">هل تتعارض مع رجعة الأئمة المعصومين؟</a>
+            <a href="#">كراماتها بعد الرجعة</a>
+            <a href="#">آيات و براهين</a>
+            <a href="#">إسلوب حياتها و تعايشها في زماننا</a>
+            <a href="#">حوارات ونقاشات</a>
         </div>
     </div>
 </div>
 
-<!-- النبذة التعريفية -->
-<div class="about-section page active">
-    <p>
-        هذا التطبيق يقدم نبذة حول معجزة الرجعة وأحداثها في عالم الملكوت وعالم الدنيا، بالإضافة إلى مناقشة مواضيع النسخ والتقمص وأسباب المعجزة.
-    </p>
-</div>
-
-<!-- زر تفاصيل معجزة الرجعة -->
-<div class="details-button page active">
-    <button id="toggleButton">تفاصيل معجزة الرجعة</button>
-    <div id="secondaryButtons" class="secondary-buttons">
-        <a href="#">المقدمة</a>
-        <a href="#">أحداث الرجعة في عالم الملكوت</a>
-        <a href="#">أحداث الرجعة في عالم الدنيا</a>
-        <a href="#">ماهي المعجزة</a>
-        <a href="#">إشكاليات موضوع النسخ والتقمص</a>
-        <a href="#">أسباب المعجزة</a>
-        <a href="#">هل تتعارض مع القوانين التكوينية؟</a>
-        <a href="#">هل تتعارض مع رجعة الأئمة المعصومين؟</a>
-        <a href="#">كراماتها بعد الرجعة</a>
-        <a href="#">آيات و براهين</a>
-        <a href="#">إسلوب حياتها و تعايشها في زماننا</a>
-        <a href="#">حوارات ونقاشات</a>
-    </div>
-</div>
-
-<!-- قسم المنشورات -->
-<div id="posts" class="page">
+<!-- صفحة المنشورات -->
+<div class="page" id="posts">
     <input type="text" id="nickname" placeholder="الاسم المستعار">
     <input type="text" id="username" placeholder="اسم المستخدم (إنجليزي)">
     <button onclick="saveAccount()">حفظ الحساب</button>
@@ -142,7 +139,7 @@ video { width:100%; display:block; border-radius:10px; }
 <div id="installApp"></div>
 
 <script>
-// ===== مشغل الفيديو =====
+// ==== الفيديو ====
 const videoList = ["video.mp4","video2.mp4","video3.mp4"];
 let currentIndex = 0;
 let repeatActive = false;
@@ -162,165 +159,89 @@ function loadVideo(index){
     videoPlayer.load();
     updatePlayPauseIcon();
 }
-
-playPauseBtn.addEventListener('click', ()=>{
-    if(videoPlayer.paused) videoPlayer.play();
-    else videoPlayer.pause();
-    updatePlayPauseIcon();
-});
 function updatePlayPauseIcon(){
     playPauseBtn.innerHTML = videoPlayer.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
 }
-nextBtn.addEventListener('click', ()=>{
-    currentIndex = (currentIndex + 1) % videoList.length;
-    loadVideo(currentIndex);
-    videoPlayer.play();
-});
-prevBtn.addEventListener('click', ()=>{
-    currentIndex = (currentIndex - 1 + videoList.length) % videoList.length;
-    loadVideo(currentIndex);
-    videoPlayer.play();
-});
-repeatBtn.addEventListener('click', ()=>{
-    repeatActive = !repeatActive;
-    repeatBtn.style.color = repeatActive ? '#00bcd4' : '#fff';
-});
-videoPlayer.addEventListener('ended', ()=>{
-    if(repeatActive){
-        videoPlayer.currentTime = 0;
-        videoPlayer.play();
-    } else {
-        videoPlayer.pause();
-        updatePlayPauseIcon();
-    }
-});
-downloadBtn.addEventListener('click', ()=>{
-    const link = document.createElement('a');
-    link.href = videoList[currentIndex];
-    link.download = videoList[currentIndex];
-    link.click();
-});
-videoPlayer.addEventListener('timeupdate', ()=>{
-    const percent = (videoPlayer.currentTime / videoPlayer.duration) * 100;
-    progressFilled.style.width = percent + '%';
-});
-progressBar.addEventListener('click', (e)=>{
-    const rect = progressBar.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const width = rect.width;
-    const newTime = (clickX / width) * videoPlayer.duration;
-    videoPlayer.currentTime = newTime;
-});
-fullscreenBtn.addEventListener('click', ()=>{
-    if (!document.fullscreenElement){
-        videoPlayer.requestFullscreen();
-    } else {
-        document.exitFullscreen();
-    }
-});
+playPauseBtn.addEventListener('click', ()=>{ videoPlayer.paused ? videoPlayer.play() : videoPlayer.pause(); updatePlayPauseIcon(); });
+nextBtn.addEventListener('click', ()=>{ currentIndex=(currentIndex+1)%videoList.length; loadVideo(currentIndex); videoPlayer.play(); });
+prevBtn.addEventListener('click', ()=>{ currentIndex=(currentIndex-1+videoList.length)%videoList.length; loadVideo(currentIndex); videoPlayer.play(); });
+repeatBtn.addEventListener('click', ()=>{ repeatActive=!repeatActive; repeatBtn.style.color=repeatActive?'#00bcd4':'#fff'; });
+videoPlayer.addEventListener('ended', ()=>{ if(repeatActive){videoPlayer.currentTime=0; videoPlayer.play();} else {videoPlayer.pause(); updatePlayPauseIcon();} });
+downloadBtn.addEventListener('click', ()=>{ const link=document.createElement('a'); link.href=videoList[currentIndex]; link.download=videoList[currentIndex]; link.click(); });
+videoPlayer.addEventListener('timeupdate', ()=>{ progressFilled.style.width=(videoPlayer.currentTime/videoPlayer.duration*100)+'%'; });
+progressBar.addEventListener('click',(e)=>{ const rect=progressBar.getBoundingClientRect(); const clickX=e.clientX-rect.left; videoPlayer.currentTime=(clickX/rect.width)*videoPlayer.duration; });
+fullscreenBtn.addEventListener('click', ()=>{ !document.fullscreenElement ? videoPlayer.requestFullscreen() : document.exitFullscreen(); });
 
-// ===== زر التفاصيل =====
+// ==== التفاصيل ====
 const toggleButton = document.getElementById('toggleButton');
 const secondaryButtons = document.getElementById('secondaryButtons');
-toggleButton.addEventListener('click', ()=>{
-    secondaryButtons.style.display = (secondaryButtons.style.display==="flex")?"none":"flex";
-});
+toggleButton.addEventListener('click', ()=>{ secondaryButtons.style.display=(secondaryButtons.style.display==="flex")?"none":"flex"; });
 
-// ===== تثبيت PWA =====
+// ==== PWA ====
 let deferredPrompt;
-const installAppDiv = document.getElementById('installApp');
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installAppDiv.innerHTML = '<button onclick="installApp()">تثبيت التطبيق</button>';
-});
-function installApp(){
-    if(deferredPrompt){
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(choiceResult=>{
-            deferredPrompt=null;
-        });
-    }
-}
+const installAppDiv=document.getElementById('installApp');
+window.addEventListener('beforeinstallprompt',(e)=>{ e.preventDefault(); deferredPrompt=e; installAppDiv.innerHTML='<button onclick="installApp()">تثبيت التطبيق</button>'; });
+function installApp(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; }); }}
 
-// ==== إدارة الصفحات ====
+// ==== الصفحات ====
 function showPage(pageId){
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    const page = document.getElementById(pageId);
-    page.classList.add('active');
-
-    if(pageId === 'posts') loadPosts(); // هذا يضمن تحميل المنشورات عند الدخول للقسم
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    if(pageId==='posts') loadPosts();
 }
 
-// ==== قسم المنشورات وحساب المستخدم ====
-window.addEventListener('load', ()=>{
-    loadVideo(currentIndex);
-    loadAccount();
-    loadPosts();
-});
+// ==== الحساب والمنشورات ====
+window.addEventListener('load', ()=>{ loadVideo(currentIndex); loadAccount(); loadPosts(); });
 
 function saveAccount(){
-    let nickname = document.getElementById('nickname').value.trim();
-    let username = document.getElementById('username').value.trim();
-    const nicknameLength = nickname.replace(/\s/g,'').length;
-    if(nicknameLength < 2 || nicknameLength > 110){
-        alert("الاسم المستعار يجب أن يكون بين 2 و110 حرف (باستثناء الفراغات).");
-        return;
-    }
-    if(!/^[A-Za-z0-9\-._@+\/*=]+$/.test(username)){
-        alert("اسم المستخدم يحتوي على رموز غير مسموح بها.");
-        return;
-    }
-    const accounts = JSON.parse(localStorage.getItem("accounts")) || {};
-    if(accounts[username] && accounts[username] !== nickname){
-        alert("اسم المستخدم مستخدم بالفعل، يرجى اختيار اسم آخر.");
-        return;
-    }
-    accounts[username] = nickname;
-    localStorage.setItem("accounts", JSON.stringify(accounts));
-    localStorage.setItem("currentUser", JSON.stringify({username, nickname}));
+    let nickname=document.getElementById('nickname').value.trim();
+    let username=document.getElementById('username').value.trim();
+    const nicknameLength=nickname.replace(/\s/g,'').length;
+    if(nicknameLength<2||nicknameLength>110){ alert("الاسم المستعار يجب أن يكون بين 2 و110 حرف (باستثناء الفراغات)."); return; }
+    if(!/^[A-Za-z0-9\-._@+\/*=]+$/.test(username)){ alert("اسم المستخدم يحتوي على رموز غير مسموح بها."); return; }
+    const accounts=JSON.parse(localStorage.getItem("accounts"))||{};
+    if(accounts[username]&&accounts[username]!==nickname){ alert("اسم المستخدم مستخدم بالفعل، يرجى اختيار اسم آخر."); return; }
+    accounts[username]=nickname;
+    localStorage.setItem("accounts",JSON.stringify(accounts));
+    localStorage.setItem("currentUser",JSON.stringify({username,nickname}));
     alert("تم حفظ الحساب بنجاح!");
 }
 
 function loadAccount(){
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const currentUser=JSON.parse(localStorage.getItem("currentUser"));
     if(currentUser){
-        document.getElementById('nickname').value = currentUser.nickname;
-        document.getElementById('username').value = currentUser.username;
+        document.getElementById('nickname').value=currentUser.nickname;
+        document.getElementById('username').value=currentUser.username;
     }
 }
 
 function addPost(){
-    const textarea = document.getElementById('newPostText');
-    const text = textarea.value.trim();
-    if(text === "") return;
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    if(!currentUser){
-        alert("يرجى حفظ الحساب أولاً.");
-        return;
-    }
-    const posts = JSON.parse(localStorage.getItem("posts")) || [];
-    posts.push({text, username: currentUser.username, nickname: currentUser.nickname, timestamp: Date.now()});
-    localStorage.setItem("posts", JSON.stringify(posts));
-    textarea.value = "";
+    const text=document.getElementById('newPostText').value.trim();
+    if(text==="") return;
+    const currentUser=JSON.parse(localStorage.getItem("currentUser"));
+    if(!currentUser){ alert("يرجى حفظ الحساب أولاً."); return; }
+    const posts=JSON.parse(localStorage.getItem("posts"))||[];
+    posts.push({text,username:currentUser.username,nickname:currentUser.nickname,timestamp:Date.now()});
+    localStorage.setItem("posts",JSON.stringify(posts));
+    document.getElementById('newPostText').value="";
     loadPosts();
 }
 
 function loadPosts(){
-    const posts = JSON.parse(localStorage.getItem("posts")) || [];
-    const now = Date.now();
-    const oneWeek = 7*24*60*60*1000;
-    const recentPosts = posts.filter(p => now - p.timestamp <= oneWeek);
-    localStorage.setItem("posts", JSON.stringify(recentPosts));
-    const myPostsList = document.getElementById('myPostsList');
-    const visitorPostsList = document.getElementById('visitorPostsList');
-    myPostsList.innerHTML = "";
-    visitorPostsList.innerHTML = "";
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const posts=JSON.parse(localStorage.getItem("posts"))||[];
+    const now=Date.now();
+    const oneWeek=7*24*60*60*1000;
+    const recentPosts=posts.filter(p=>now-p.timestamp<=oneWeek);
+    localStorage.setItem("posts",JSON.stringify(recentPosts));
+    const myPostsList=document.getElementById('myPostsList');
+    const visitorPostsList=document.getElementById('visitorPostsList');
+    myPostsList.innerHTML="";
+    visitorPostsList.innerHTML="";
+    const currentUser=JSON.parse(localStorage.getItem("currentUser"));
     recentPosts.forEach(p=>{
-        const postDiv = document.createElement('div');
-        postDiv.className = "post";
-        postDiv.innerHTML = `<div class="post-header">
+        const postDiv=document.createElement('div');
+        postDiv.className="post";
+        postDiv.innerHTML=`<div class="post-header">
             <span class="nickname">${p.nickname}</span>
             <span class="username">@${p.username}</span>
         </div>
@@ -329,25 +250,13 @@ function loadPosts(){
             <button onclick="likePost(this)">👍 إعجاب</button>
             <button onclick="commentPost(this)">💬 تعليق</button>
         </div>`;
-        if(currentUser && p.username === currentUser.username){
-            myPostsList.prepend(postDiv);
-        } else {
-            visitorPostsList.prepend(postDiv);
-        }
+        if(currentUser&&p.username===currentUser.username) myPostsList.prepend(postDiv);
+        else visitorPostsList.prepend(postDiv);
     });
 }
 
-function likePost(btn){
-    btn.innerText = btn.innerText.includes("✔️") ? "👍 إعجاب" : "✔️ تم الإعجاب";
-}
-function commentPost(btn){
-    const comment = prompt("أدخل تعليقك:");
-    if(!comment) return;
-    const commentEl = document.createElement("p");
-    commentEl.style.marginRight = "15px";
-    commentEl.innerText = "💬 " + comment;
-    btn.parentElement.appendChild(commentEl);
-}
+function likePost(btn){ btn.innerText=btn.innerText.includes("✔️")?"👍 إعجاب":"✔️ تم الإعجاب"; }
+function commentPost(btn){ const comment=prompt("أدخل تعليقك:"); if(!comment) return; const commentEl=document.createElement("p"); commentEl.style.marginRight="15px"; commentEl.innerText="💬 "+comment; btn.parentElement.appendChild(commentEl); }
 </script>
 
 </body>
