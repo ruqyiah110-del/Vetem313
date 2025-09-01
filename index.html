@@ -245,8 +245,11 @@ function installApp(){
 
 // ==== إدارة الصفحات ====
 function showPage(pageId){
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const page = document.getElementById(pageId);
+    page.classList.add('active');
+
+    if(pageId === 'posts') loadPosts(); // هذا يضمن تحميل المنشورات عند الدخول للقسم
 }
 
 // ==== قسم المنشورات وحساب المستخدم ====
