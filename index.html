@@ -1,159 +1,151 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>السر الإلهي - بنت الإمام الحسين عليه السلام رقيّه</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="manifest" href="manifest.json">
-
-    <style>
-        body { font-family: 'Arial', sans-serif; direction: rtl; background-color: #f9f9f9; color:#333; padding-bottom:60px; }
-        h1 { text-align: center; margin: 20px 0; font-size: 24px; }
-        .media-player { width:90%; margin:10px auto; text-align:center; position: relative; }
-        video { width:100%; max-width:600px; border:2px solid #00bcd4; border-radius:10px; }
-        .video-controls { display: flex; justify-content: center; gap: 10px; margin-top: 5px; }
-        .video-controls button { background:#00bcd4; color:#fff; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:5px; }
-        .video-controls button:hover { background:#0097a7; }
-        .about-section { background-color:#fff; padding:15px; margin:20px auto; border-radius:8px; width:90%; box-shadow:0 2px 5px rgba(0,0,0,0.2); text-align:justify; }
-        .details-button { display:block; width:90%; margin:10px auto; text-align:center; }
-        .secondary-buttons { display:none; flex-direction:column; margin-top:10px; }
-        .secondary-buttons a { display:block; padding:8px; margin:5px 0; background-color:#f0f0f0; border-radius:5px; text-decoration:none; color:#333; text-align:center; }
-        .secondary-buttons a:hover { background-color:#e0e0e0; }
-        .bottom-bar { position:fixed; bottom:0; width:100%; background-color:#333; display:flex; justify-content:space-around; padding:10px 0; box-shadow:0 -2px 5px rgba(0,0,0,0.2); }
-        .bottom-bar a { color:white; text-decoration:none; font-size:14px; display:flex; flex-direction:column; align-items:center; }
-        .bottom-bar a i { font-size:20px; margin-bottom:5px; }
-        .bottom-bar a:hover { color:#00bcd4; }
-        #installApp { display:flex; justify-content:center; margin-top:20px; }
-        #installApp button { background-color:#00bcd4; color:white; padding:10px 20px; border-radius:5px; cursor:pointer; font-size:16px; }
-        #installApp button:hover { background-color:#0097a7; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>السر الإلهي - مشغل فيديو متقدم</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+body { font-family:'Arial', sans-serif; background:#f9f9f9; margin:0; padding:0; text-align:center; }
+h1 { margin:20px 0; font-size:24px; }
+.media-player { position:relative; width:90%; max-width:720px; margin:20px auto; background:#000; border-radius:10px; overflow:hidden; }
+video { width:100%; display:block; border-radius:10px; }
+.controls-overlay { position:absolute; bottom:0; left:0; width:100%; background:rgba(0,0,0,0.5); display:flex; flex-direction:column; padding:5px; box-sizing:border-box; }
+.progress-bar { width:100%; height:5px; background:#555; cursor:pointer; margin-bottom:5px; border-radius:3px; position:relative; }
+.progress-filled { height:100%; background:#00bcd4; width:0%; border-radius:3px; }
+.controls-buttons { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+.controls-buttons button { background:none; border:none; color:#fff; font-size:18px; cursor:pointer; margin:2px; display:flex; align-items:center; gap:5px; }
+.controls-buttons button:hover { color:#00bcd4; }
+</style>
 </head>
 <body>
 
-    <h1>السر الإلهي - بنت الإمام الحسين عليه السلام رقيّه</h1>
+<h1>السر الإلهي - بنت الإمام الحسين رقيّه</h1>
 
-    <!-- مشغل الفيديو -->
-    <div class="media-player">
-        <video id="videoPlayer" controls>
-            <source src="video.mp4" type="video/mp4">
-            المتصفح لا يدعم تشغيل الفيديو.
-        </video>
+<div class="media-player">
+    <video id="videoPlayer" src="video.mp4"></video>
 
-        <!-- أزرار التحكم داخل المشغل -->
-        <div class="video-controls">
-            <button id="downloadBtn"><i class="fas fa-download"></i> تحميل</button>
-            <button id="nextBtn"><i class="fas fa-forward"></i> التالي</button>
+    <div class="controls-overlay">
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-filled" id="progressFilled"></div>
+        </div>
+        <div class="controls-buttons">
+            <button id="prevBtn"><i class="fas fa-backward"></i></button>
+            <button id="playPauseBtn"><i class="fas fa-play"></i></button>
+            <button id="nextBtn"><i class="fas fa-forward"></i></button>
+            <button id="repeatBtn"><i class="fas fa-retweet"></i></button>
+            <button id="downloadBtn"><i class="fas fa-download"></i></button>
         </div>
     </div>
+</div>
 
-    <!-- النبذة التعريفية -->
-    <div class="about-section">
-        <p>
-            هذا التطبيق يقدم نبذة حول معجزة الرجعة وأحداثها في عالم الملكوت وعالم الدنيا، بالإضافة إلى مناقشة مواضيع النسخ والتقمص وأسباب المعجزة.
-        </p>
-    </div>
+<script>
+// الفيديوهات
+const videoList = ["video.mp4", "video2.mp4", "video3.mp4"];
+let currentIndex = 0;
 
-    <!-- زر تفاصيل معجزة الرجعة -->
-    <div class="details-button">
-        <button id="toggleButton">تفاصيل معجزة الرجعة</button>
-        <div id="secondaryButtons" class="secondary-buttons">
-            <a href="#">المقدمة</a>
-            <a href="#">أحداث الرجعة في عالم الملكوت</a>
-            <a href="#">أحداث الرجعة في عالم الدنيا</a>
-            <a href="#">ماهي المعجزة</a>
-            <a href="#">إشكاليات موضوع النسخ والتقمص</a>
-            <a href="#">أسباب المعجزة</a>
-            <a href="#">هل تتعارض مع القوانين التكوينية؟</a>
-            <a href="#">هل تتعارض مع رجعة الأئمة المعصومين؟</a>
-            <a href="#">كراماتها بعد الرجعة</a>
-            <a href="#">آيات و براهين</a>
-            <a href="#">إسلوب حياتها و تعايشها في زماننا</a>
-            <a href="#">حوارات ونقاشات</a>
-        </div>
-    </div>
+// عناصر التحكم
+const videoPlayer = document.getElementById('videoPlayer');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById('prevBtn');
+const repeatBtn = document.getElementById('repeatBtn');
+const downloadBtn = document.getElementById('downloadBtn');
+const progressBar = document.getElementById('progressBar');
+const progressFilled = document.getElementById('progressFilled');
 
-    <!-- شريط الأزرار السفلي -->
-    <div class="bottom-bar">
-        <a href="#"><i class="fas fa-home"></i>الرئيسية</a>
-        <a href="#"><i class="fas fa-list"></i>المواضيع</a>
-        <a href="#"><i class="fas fa-newspaper"></i>المنشورات</a>
-        <a href="#"><i class="fas fa-comments"></i>التواصل</a>
-    </div>
+// تحديث الفيديو الحالي
+function loadVideo(index){
+    videoPlayer.src = videoList[index];
+    videoPlayer.load();
+    updateButtons();
+}
 
-    <!-- زر تثبيت تطبيق PWA -->
-    <div id="installApp"></div>
+// تشغيل/إيقاف
+playPauseBtn.addEventListener('click', ()=>{
+    if(videoPlayer.paused) videoPlayer.play();
+    else videoPlayer.pause();
+    updatePlayPauseIcon();
+});
 
-    <!-- جافاسكربت -->
-    <script>
-        const videoPlayer = document.getElementById('videoPlayer');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const nextBtn = document.getElementById('nextBtn');
+function updatePlayPauseIcon(){
+    playPauseBtn.innerHTML = videoPlayer.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
+}
 
-        // قائمة الفيديوات
-        const videoList = ["video.mp4", "video2.mp4", "video3.mp4"]; // أضف كل الفيديوات هنا
-        let currentIndex = 0;
+// التالي
+nextBtn.addEventListener('click', ()=>{
+    if(currentIndex < videoList.length - 1){
+        currentIndex++;
+        loadVideo(currentIndex);
+        videoPlayer.play();
+        updatePlayPauseIcon();
+    }
+});
 
-        // تحديث زر التالي
-        function updateNextButton() {
-            if(currentIndex >= videoList.length - 1){
-                nextBtn.style.display = "none";
-            } else {
-                nextBtn.style.display = "inline-flex";
-            }
-        }
+// السابق
+prevBtn.addEventListener('click', ()=>{
+    if(currentIndex > 0){
+        currentIndex--;
+        loadVideo(currentIndex);
+        videoPlayer.play();
+        updatePlayPauseIcon();
+    }
+});
 
-        // تشغيل الفيديو التالي
-        nextBtn.addEventListener("click", () => {
-            if(currentIndex < videoList.length - 1){
-                currentIndex++;
-                videoPlayer.src = videoList[currentIndex];
-                videoPlayer.play();
-                updateNextButton();
-            }
-        });
+// تكرار الفيديو
+repeatBtn.addEventListener('click', ()=>{
+    videoPlayer.currentTime = 0;
+    videoPlayer.play();
+    updatePlayPauseIcon();
+});
 
-        // زر تحميل الفيديو
-        downloadBtn.addEventListener("click", () => {
-            const link = document.createElement('a');
-            link.href = videoList[currentIndex];
-            link.download = videoList[currentIndex];
-            link.click();
-        });
+// تحميل الفيديو
+downloadBtn.addEventListener('click', ()=>{
+    const link = document.createElement('a');
+    link.href = videoList[currentIndex];
+    link.download = videoList[currentIndex];
+    link.click();
+});
 
-        // تهيئة عند تحميل الصفحة
-        window.addEventListener("load", () => {
-            videoPlayer.src = videoList[currentIndex];
-            updateNextButton();
-        });
+// تحديث الأزرار (إخفاء التالي/السابق عند الحد)
+function updateButtons(){
+    nextBtn.style.display = currentIndex >= videoList.length-1 ? 'none' : 'inline-flex';
+    prevBtn.style.display = currentIndex <= 0 ? 'none' : 'inline-flex';
+}
 
-        // زر تفاصيل معجزة الرجعة
-        const toggleButton = document.getElementById('toggleButton');
-        const secondaryButtons = document.getElementById('secondaryButtons');
+// شريط التقدم
+videoPlayer.addEventListener('timeupdate', ()=>{
+    const percent = (videoPlayer.currentTime / videoPlayer.duration) * 100;
+    progressFilled.style.width = percent + '%';
+});
 
-        toggleButton.addEventListener('click', () => {
-            secondaryButtons.style.display = (secondaryButtons.style.display === "flex") ? "none" : "flex";
-        });
+// التقدم عند الضغط على الشريط
+progressBar.addEventListener('click', (e)=>{
+    const rect = progressBar.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+    const newTime = (clickX / width) * videoPlayer.duration;
+    videoPlayer.currentTime = newTime;
+});
 
-        // إعدادات PWA للتثبيت
-        let deferredPrompt;
-        const installAppDiv = document.getElementById('installApp');
+// عند انتهاء الفيديو، شغّل التالي تلقائي إذا موجود
+videoPlayer.addEventListener('ended', ()=>{
+    if(currentIndex < videoList.length - 1){
+        currentIndex++;
+        loadVideo(currentIndex);
+        videoPlayer.play();
+        updatePlayPauseIcon();
+    } else {
+        updatePlayPauseIcon();
+    }
+});
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installAppDiv.innerHTML = '<button onclick="installApp()">تثبيت التطبيق</button>';
-        });
-
-        function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    deferredPrompt = null;
-                });
-            }
-        }
-    </script>
+// التحميل عند بدء الصفحة
+window.addEventListener('load', ()=>{
+    loadVideo(currentIndex);
+    updatePlayPauseIcon();
+});
+</script>
 
 </body>
 </html>
