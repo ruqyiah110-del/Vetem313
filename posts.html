@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المنشورات</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Tahoma", sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      background: #6200ea;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .new-post {
+      flex: 1;
+      background: #fff;
+      padding: 15px;
+      border-left: 1px solid #ddd;
+    }
+
+    .new-post textarea {
+      width: 100%;
+      height: 80px;
+      resize: none;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .new-post button {
+      background: #6200ea;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .new-post button:hover {
+      background: #4500b5;
+    }
+
+    .posts-section {
+      flex: 2;
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+    }
+
+    .posts-column {
+      flex: 1;
+      padding: 15px;
+      background: #fafafa;
+      border-left: 1px solid #ddd;
+      overflow-y: auto;
+    }
+
+    .posts-column h2 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #444;
+    }
+
+    .post {
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .post p {
+      margin: 0 0 8px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: #777;
+    }
+
+    .actions button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      color: #6200ea;
+    }
+
+    .actions button:hover {
+      text-decoration: underline;
+    }
+
+    /* للهواتف */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .posts-section {
+        flex-direction: column;
+      }
+      .posts-column {
+        border-left: none;
+        border-top: 1px solid #ddd;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>قسم المنشورات</header>
+
+  <div class="container">
+    <!-- قسم كتابة المنشور -->
+    <div class="new-post">
+      <h2>إنشاء منشور جديد</h2>
+      <textarea id="postContent" placeholder="شارك شيئًا مع الآخرين..."></textarea>
+      <button onclick="addPost('myPosts')">نشر</button>
+    </div>
+
+    <!-- قسم المنشورات -->
+    <div class="posts-section">
+      <div class="posts-column" id="myPosts">
+        <h2>منشوراتي</h2>
+      </div>
+
+      <div class="posts-column" id="visitorPosts">
+        <h2>منشورات الزوار</h2>
+        <div class="post">
+          <p>أهلاً! هذا مثال لمنشور أحد الزوار.</p>
+          <div class="actions">
+            <button onclick="likePost(this)">إعجاب</button>
+            <button onclick="commentPost(this)">تعليق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function addPost(targetId) {
+      let content = document.getElementById("postContent").value.trim();
+      if (content === "") {
+        alert("الرجاء كتابة شيء قبل النشر.");
+        return;
+      }
+
+      let post = document.createElement("div");
+      post.className = "post";
+      post.innerHTML = `
+        <p>${content}</p>
+        <div class="actions">
+          <button onclick="likePost(this)">إعجاب</button>
+          <button onclick="commentPost(this)">تعليق</button>
+        </div>
+      `;
+
+      document.getElementById(targetId).appendChild(post);
+      document.getElementById("postContent").value = "";
+    }
+
+    function likePost(btn) {
+      btn.innerText = btn.innerText === "إعجاب" ? "أعجبني ✓" : "إعجاب";
+    }
+
+    function commentPost(btn) {
+      let comment = prompt("أضف تعليقك:");
+      if (comment) {
+        let commentNode = document.createElement("p");
+        commentNode.style.fontSize = "13px";
+        commentNode.style.color = "#444";
+        commentNode.innerText = "💬 " + comment;
+        btn.closest(".post").appendChild(commentNode);
+      }
+    }
+  </script>
+
+</body>
+</html>
