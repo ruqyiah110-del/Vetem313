@@ -1,165 +1,50 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>السر الإلهي - بنت الإمام الحسين عليه السلام رقيّه</title>
-    <!-- مكتبة Font Awesome للأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="manifest" href="manifest.json"> <!-- ربط ملف الـ Manifest -->
+    <link rel="manifest" href="manifest.json">
+
     <style>
-        /* التنسيقات العامة */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            direction: rtl;
-            background-color: #f9f9f9;
-            color: #333;
-            padding-bottom: 60px; /* توفير مساحة لشريط الأزرار */
-        }
-
-        h1 {
-            text-align: center;
-            margin: 20px 0;
-            font-size: 24px;
-        }
-
-        /* قسم تشغيل الوسائط */
-        .media-player {
-            width: 90%;
-            margin: 10px auto;
-            text-align: center;
-        }
-
-        video {
-            width: 100%;
-            max-width: 600px;
-            border: 2px solid #00bcd4;
-            border-radius: 10px;
-        }
-
-        /* النبذة التعريفية */
-        .about-section {
-            background-color: #fff;
-            padding: 15px;
-            margin: 20px auto;
-            border-radius: 8px;
-            width: 90%;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            text-align: justify;
-        }
-
-        /* زر التوسع والطي */
-        .details-button {
-            display: block;
-            width: 90%;
-            margin: 10px auto;
-            text-align: center;
-        }
-
-        button {
-            background-color: #00bcd4;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #0097a7;
-        }
-
-        /* الأزرار الثانوية */
-        .secondary-buttons {
-            display: none;
-            flex-direction: column;
-            margin-top: 10px;
-        }
-
-        .secondary-buttons a {
-            display: block;
-            padding: 8px;
-            margin: 5px 0;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-            text-decoration: none;
-            color: #333;
-            text-align: center;
-        }
-
-        .secondary-buttons a:hover {
-            background-color: #e0e0e0;
-        }
-
-        /* شريط الأزرار السفلي */
-        .bottom-bar {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #333;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .bottom-bar a {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .bottom-bar a i {
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-
-        .bottom-bar a:hover {
-            color: #00bcd4;
-        }
-
-        /* زر تثبيت التطبيق */
-        #installApp {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        #installApp button {
-            background-color: #00bcd4;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        #installApp button:hover {
-            background-color: #0097a7;
-        }
+        body { font-family: 'Arial', sans-serif; direction: rtl; background-color: #f9f9f9; color:#333; padding-bottom:60px; }
+        h1 { text-align: center; margin: 20px 0; font-size: 24px; }
+        .media-player { width:90%; margin:10px auto; text-align:center; position: relative; }
+        video { width:100%; max-width:600px; border:2px solid #00bcd4; border-radius:10px; }
+        .video-controls { display: flex; justify-content: center; gap: 10px; margin-top: 5px; }
+        .video-controls button { background:#00bcd4; color:#fff; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:5px; }
+        .video-controls button:hover { background:#0097a7; }
+        .about-section { background-color:#fff; padding:15px; margin:20px auto; border-radius:8px; width:90%; box-shadow:0 2px 5px rgba(0,0,0,0.2); text-align:justify; }
+        .details-button { display:block; width:90%; margin:10px auto; text-align:center; }
+        .secondary-buttons { display:none; flex-direction:column; margin-top:10px; }
+        .secondary-buttons a { display:block; padding:8px; margin:5px 0; background-color:#f0f0f0; border-radius:5px; text-decoration:none; color:#333; text-align:center; }
+        .secondary-buttons a:hover { background-color:#e0e0e0; }
+        .bottom-bar { position:fixed; bottom:0; width:100%; background-color:#333; display:flex; justify-content:space-around; padding:10px 0; box-shadow:0 -2px 5px rgba(0,0,0,0.2); }
+        .bottom-bar a { color:white; text-decoration:none; font-size:14px; display:flex; flex-direction:column; align-items:center; }
+        .bottom-bar a i { font-size:20px; margin-bottom:5px; }
+        .bottom-bar a:hover { color:#00bcd4; }
+        #installApp { display:flex; justify-content:center; margin-top:20px; }
+        #installApp button { background-color:#00bcd4; color:white; padding:10px 20px; border-radius:5px; cursor:pointer; font-size:16px; }
+        #installApp button:hover { background-color:#0097a7; }
     </style>
 </head>
 <body>
 
-    <!-- العنوان -->
     <h1>السر الإلهي - بنت الإمام الحسين عليه السلام رقيّه</h1>
 
-    <!-- مشغل الوسائط -->
+    <!-- مشغل الفيديو -->
     <div class="media-player">
-        <video controls>
-  <source src="video.mp4" type="video/mp4">
-  المتصفح لا يدعم تشغيل الفيديو.
-</video>
+        <video id="videoPlayer" controls>
+            <source src="video.mp4" type="video/mp4">
+            المتصفح لا يدعم تشغيل الفيديو.
+        </video>
+
+        <!-- أزرار التحكم داخل المشغل -->
+        <div class="video-controls">
+            <button id="downloadBtn"><i class="fas fa-download"></i> تحميل</button>
+            <button id="nextBtn"><i class="fas fa-forward"></i> التالي</button>
+        </div>
     </div>
 
     <!-- النبذة التعريفية -->
@@ -196,20 +81,58 @@
         <a href="#"><i class="fas fa-comments"></i>التواصل</a>
     </div>
 
-    <!-- زر تثبيت تطبيق ويب -->
+    <!-- زر تثبيت تطبيق PWA -->
     <div id="installApp"></div>
 
-    <!-- جافا سكربت للتحكم في زر التوسع وPWA -->
+    <!-- جافاسكربت -->
     <script>
+        const videoPlayer = document.getElementById('videoPlayer');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        // قائمة الفيديوات
+        const videoList = ["video.mp4", "video2.mp4", "video3.mp4"]; // أضف كل الفيديوات هنا
+        let currentIndex = 0;
+
+        // تحديث زر التالي
+        function updateNextButton() {
+            if(currentIndex >= videoList.length - 1){
+                nextBtn.style.display = "none";
+            } else {
+                nextBtn.style.display = "inline-flex";
+            }
+        }
+
+        // تشغيل الفيديو التالي
+        nextBtn.addEventListener("click", () => {
+            if(currentIndex < videoList.length - 1){
+                currentIndex++;
+                videoPlayer.src = videoList[currentIndex];
+                videoPlayer.play();
+                updateNextButton();
+            }
+        });
+
+        // زر تحميل الفيديو
+        downloadBtn.addEventListener("click", () => {
+            const link = document.createElement('a');
+            link.href = videoList[currentIndex];
+            link.download = videoList[currentIndex];
+            link.click();
+        });
+
+        // تهيئة عند تحميل الصفحة
+        window.addEventListener("load", () => {
+            videoPlayer.src = videoList[currentIndex];
+            updateNextButton();
+        });
+
+        // زر تفاصيل معجزة الرجعة
         const toggleButton = document.getElementById('toggleButton');
         const secondaryButtons = document.getElementById('secondaryButtons');
 
         toggleButton.addEventListener('click', () => {
-            if (secondaryButtons.style.display === "none" || secondaryButtons.style.display === "") {
-                secondaryButtons.style.display = "flex";
-            } else {
-                secondaryButtons.style.display = "none";
-            }
+            secondaryButtons.style.display = (secondaryButtons.style.display === "flex") ? "none" : "flex";
         });
 
         // إعدادات PWA للتثبيت
@@ -217,8 +140,8 @@
         const installAppDiv = document.getElementById('installApp');
 
         window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault(); // منع التثبيت التلقائي
-            deferredPrompt = e; // حفظ الحدث
+            e.preventDefault();
+            deferredPrompt = e;
             installAppDiv.innerHTML = '<button onclick="installApp()">تثبيت التطبيق</button>';
         });
 
@@ -226,12 +149,7 @@
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('تم تثبيت التطبيق');
-                    } else {
-                        console.log('لم يتم تثبيت التطبيق');
-                    }
-                    deferredPrompt = null; // إلغاء الحدث بعد التثبيت
+                    deferredPrompt = null;
                 });
             }
         }
