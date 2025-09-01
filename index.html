@@ -45,7 +45,7 @@ video { width:100%; display:block; border-radius:10px; }
 
 <!-- مشغل الفيديو -->
 <div class="media-player">
-    <video id="videoPlayer"></video>
+    <video id="videoPlayer" playsinline></video>
     <div class="controls-overlay">
         <div class="progress-bar" id="progressBar">
             <div class="progress-filled" id="progressFilled"></div>
@@ -129,21 +129,20 @@ playPauseBtn.addEventListener('click', ()=>{
     else videoPlayer.pause();
     updatePlayPauseIcon();
 });
-
 function updatePlayPauseIcon(){
     playPauseBtn.innerHTML = videoPlayer.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
 }
 
 // التالي
 nextBtn.addEventListener('click', ()=>{
-    if(currentIndex < videoList.length - 1) currentIndex++; else currentIndex=0;
+    currentIndex = (currentIndex + 1) % videoList.length;
     loadVideo(currentIndex);
     videoPlayer.play();
 });
 
 // السابق
 prevBtn.addEventListener('click', ()=>{
-    if(currentIndex > 0) currentIndex--; else currentIndex=videoList.length-1;
+    currentIndex = (currentIndex - 1 + videoList.length) % videoList.length;
     loadVideo(currentIndex);
     videoPlayer.play();
 });
@@ -178,14 +177,14 @@ progressBar.addEventListener('click', (e)=>{
 
 // عند انتهاء الفيديو
 videoPlayer.addEventListener('ended', ()=>{
-    if(currentIndex < videoList.length - 1) currentIndex++; else currentIndex=0;
+    currentIndex = (currentIndex + 1) % videoList.length;
     loadVideo(currentIndex);
     videoPlayer.play();
 });
 
 // زر Fullscreen
 fullscreenBtn.addEventListener('click', ()=>{
-    if (!document.fullscreenElement) {
+    if (!document.fullscreenElement){
         videoPlayer.requestFullscreen();
     } else {
         document.exitFullscreen();
