@@ -11,6 +11,10 @@
 body { font-family:'Arial', sans-serif; direction:rtl; background:#f9f9f9; color:#333; padding-bottom:60px; }
 h1 { text-align:center; margin:20px 0; font-size:24px; }
 
+/* الصفحات */
+.page { display:none; }
+.page.active { display:block; }
+
 /* مشغل الفيديو */
 .media-player { position:relative; width:90%; max-width:720px; margin:20px auto; background:#000; border-radius:10px; overflow:hidden; }
 video { width:100%; display:block; border-radius:10px; }
@@ -33,7 +37,6 @@ video { width:100%; display:block; border-radius:10px; }
 .secondary-buttons a:hover { background:#e0e0e0; }
 
 /* قسم المنشورات */
-#posts { display:none; width:90%; max-width:900px; margin:20px auto; }
 #posts textarea { width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px; resize:none; }
 #posts button { background:#00bcd4; color:#fff; border:none; padding:10px; border-radius:5px; cursor:pointer; width:100%; margin-bottom:10px; font-size:16px; }
 #posts button:hover { background:#0097a7; }
@@ -53,61 +56,60 @@ video { width:100%; display:block; border-radius:10px; }
 #installApp { display:flex; justify-content:center; margin-top:20px; }
 #installApp button { background:#00bcd4; color:white; padding:10px 20px; border-radius:5px; cursor:pointer; font-size:16px; }
 #installApp button:hover { background:#0097a7; }
-
-/* إظهار صفحة المنشورات */
-.page { display:none; }
-.page.active { display:block; }
 </style>
 </head>
 <body>
 
 <h1>السر الإلهي - بنت الإمام الحسين عليه السلام رقيّه</h1>
 
-<!-- مشغل الفيديو -->
-<div class="media-player page active" id="home">
-    <video id="videoPlayer" playsinline></video>
-    <div class="controls-overlay">
-        <div class="progress-bar" id="progressBar">
-            <div class="progress-filled" id="progressFilled"></div>
+<!-- الصفحة الرئيسية -->
+<div id="home" class="page active">
+    <!-- مشغل الفيديو -->
+    <div class="media-player">
+        <video id="videoPlayer" playsinline></video>
+        <div class="controls-overlay">
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-filled" id="progressFilled"></div>
+            </div>
+            <div class="controls-buttons">
+                <button id="prevBtn"><i class="fas fa-backward"></i></button>
+                <button id="playPauseBtn"><i class="fas fa-play"></i></button>
+                <button id="nextBtn"><i class="fas fa-forward"></i></button>
+                <button id="repeatBtn"><i class="fas fa-retweet"></i></button>
+                <button id="downloadBtn"><i class="fas fa-download"></i></button>
+                <button id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+            </div>
         </div>
-        <div class="controls-buttons">
-            <button id="prevBtn"><i class="fas fa-backward"></i></button>
-            <button id="playPauseBtn"><i class="fas fa-play"></i></button>
-            <button id="nextBtn"><i class="fas fa-forward"></i></button>
-            <button id="repeatBtn"><i class="fas fa-retweet"></i></button>
-            <button id="downloadBtn"><i class="fas fa-download"></i></button>
-            <button id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+    </div>
+
+    <!-- النبذة التعريفية -->
+    <div class="about-section">
+        <p>
+            هذا التطبيق يقدم نبذة حول معجزة الرجعة وأحداثها في عالم الملكوت وعالم الدنيا، بالإضافة إلى مناقشة مواضيع النسخ والتقمص وأسباب المعجزة.
+        </p>
+    </div>
+
+    <!-- زر التفاصيل -->
+    <div class="details-button">
+        <button id="toggleButton">تفاصيل معجزة الرجعة</button>
+        <div id="secondaryButtons" class="secondary-buttons">
+            <a href="#">المقدمة</a>
+            <a href="#">أحداث الرجعة في عالم الملكوت</a>
+            <a href="#">أحداث الرجعة في عالم الدنيا</a>
+            <a href="#">ماهي المعجزة</a>
+            <a href="#">إشكاليات موضوع النسخ والتقمص</a>
+            <a href="#">أسباب المعجزة</a>
+            <a href="#">هل تتعارض مع القوانين التكوينية؟</a>
+            <a href="#">هل تتعارض مع رجعة الأئمة المعصومين؟</a>
+            <a href="#">كراماتها بعد الرجعة</a>
+            <a href="#">آيات و براهين</a>
+            <a href="#">إسلوب حياتها و تعايشها في زماننا</a>
+            <a href="#">حوارات ونقاشات</a>
         </div>
     </div>
 </div>
 
-<!-- النبذة التعريفية -->
-<div class="about-section page active">
-    <p>
-        هذا التطبيق يقدم نبذة حول معجزة الرجعة وأحداثها في عالم الملكوت وعالم الدنيا، بالإضافة إلى مناقشة مواضيع النسخ والتقمص وأسباب المعجزة.
-    </p>
-</div>
-
-<!-- زر تفاصيل معجزة الرجعة -->
-<div class="details-button page active">
-    <button id="toggleButton">تفاصيل معجزة الرجعة</button>
-    <div id="secondaryButtons" class="secondary-buttons">
-        <a href="#">المقدمة</a>
-        <a href="#">أحداث الرجعة في عالم الملكوت</a>
-        <a href="#">أحداث الرجعة في عالم الدنيا</a>
-        <a href="#">ماهي المعجزة</a>
-        <a href="#">إشكاليات موضوع النسخ والتقمص</a>
-        <a href="#">أسباب المعجزة</a>
-        <a href="#">هل تتعارض مع القوانين التكوينية؟</a>
-        <a href="#">هل تتعارض مع رجعة الأئمة المعصومين؟</a>
-        <a href="#">كراماتها بعد الرجعة</a>
-        <a href="#">آيات و براهين</a>
-        <a href="#">إسلوب حياتها و تعايشها في زماننا</a>
-        <a href="#">حوارات ونقاشات</a>
-    </div>
-</div>
-
-<!-- قسم المنشورات -->
+<!-- صفحة المنشورات -->
 <div id="posts" class="page">
     <textarea rows="3" placeholder="اكتب منشورك هنا..."></textarea>
     <button onclick="addPost()">نشر المنشور</button>
@@ -125,13 +127,13 @@ video { width:100%; display:block; border-radius:10px; }
 
 <!-- شريط الأزرار السفلي -->
 <div class="bottom-bar">
-   <a href="#" onclick="showPage('home'); return false;"><i class="fas fa-home"></i>الرئيسية</a>
-<a href="#" onclick="showPage('home'); return false;"><i class="fas fa-list"></i>المواضيع</a>
-<a href="#" onclick="showPage('posts'); return false;"><i class="fas fa-newspaper"></i>المنشورات</a>
-<a href="#" onclick="showPage('home'); return false;"><i class="fas fa-comments"></i>التواصل</a>
+    <a href="#" onclick="showPage('home'); return false;"><i class="fas fa-home"></i>الرئيسية</a>
+    <a href="#" onclick="showPage('home'); return false;"><i class="fas fa-list"></i>المواضيع</a>
+    <a href="#" onclick="showPage('posts'); return false;"><i class="fas fa-newspaper"></i>المنشورات</a>
+    <a href="#" onclick="showPage('home'); return false;"><i class="fas fa-comments"></i>التواصل</a>
 </div>
 
-<!-- زر تثبيت تطبيق ويب -->
+<!-- زر تثبيت PWA -->
 <div id="installApp"></div>
 
 <script>
@@ -240,12 +242,6 @@ function installApp(){
     }
 }
 
-// تحميل أول فيديو عند فتح الصفحة
-window.addEventListener('load', ()=>{
-    loadVideo(currentIndex);
-    loadPosts();
-});
-
 // ===== إدارة الصفحات =====
 function showPage(pageId){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -293,6 +289,12 @@ function commentPost(btn){
     commentEl.innerText = "💬 " + comment;
     btn.parentElement.appendChild(commentEl);
 }
+
+// تحميل أول فيديو والمنشورات عند بدء الصفحة
+window.addEventListener('load', ()=>{
+    loadVideo(currentIndex);
+    loadPosts();
+});
 </script>
 
 </body>
